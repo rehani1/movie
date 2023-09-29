@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+      .back_button {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 40px;
+        height: auto;
+      }
+      .error {
+        color: red;
+        display: none;
+      }
+      .success {
+        color: green;
+        display: none;
+      }
+      .payment {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="payment">
+      <input type="text" id="firstName" placeholder="First Name" />
+      <input type="text" id="lastName" placeholder="Last Name" />
+
+      <input
+        type="text"
+        id="movieTitle"
+        placeholder="Confirm Movie Name and Type"
+      />
+      <input type="text" id="ticketAmount" placeholder="Amount of Tickets" />
+      <input type="text" id="dayOfWeek" placeholder="Day of the Week" />
+      <input type="text" id="creditCardInfo" placeholder="Credit Card Info" />
+      <input type="text" id="phoneNumber" placeholder="Phone Number" />
+      <button onclick="checkForm()">Submit</button>
+
+      <a href="index.html">
+        <img src="images/downarrow.png" class="back_button" />
+        <div class="error" id="error">Error!</div>
+      </a>
+      <div class="success" id="success">
+        Success! Your tickets will be sent to your phone number!
+      </div>
+      <div id="totalPrice" class="total-price">Total Price:</div>
+    </div>
+    <script>
+      function checkForm() {
+        var firstName = document.getElementById("firstName").value;
+        var lastName = document.getElementById("lastName").value;
+        var movieTitle = document.getElementById("movieTitle").value;
+        var dayOfWeek = document.getElementById("dayOfWeek").value;
+        var ticketAmount = document.getElementById("ticketAmount").value;
+        var creditCardInfo = document.getElementById("creditCardInfo").value;
+        var phoneNumber = document.getElementById("phoneNumber").value;
+        var ticketPrice = [
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+        ].includes(dayOfWeek)
+          ? 20
+          : 30;
+        var totalPriceElement = document.getElementById("totalPrice");
+        var error = document.getElementById("error");
+        var success = document.getElementById("success");
+
+        error.style.display = "none";
+        success.style.display = "none";
+
+        totalPriceElement.textContent =
+          "Total Price: $" + ticketPrice + " x " + ticketAmount;
+
+        if (firstName === "" || lastName === "") {
+          error.style.display = "block";
+          return;
+        }
+        if (
+          ![
+            "barbie 2d",
+            "barbie 3d",
+            "barbie imax",
+            "barbie imax3d",
+            "barbie 4dx",
+            "barbie dolby cinema",
+            "barbie screenx",
+            "oppenheimer 2d",
+            "oppenheimer 3d",
+            "oppenheimer imax",
+            "oppenheimer imax3d",
+            "oppenheimer 4dx",
+            "oppenheimer dolby cinema",
+            "oppenheimer screenx",
+            "the flash 2d",
+            "the flash 3d",
+            "the flash imax",
+            "the flash imax3d",
+            "the flash 4dx",
+            "the flash dolby cinema",
+            "the flash screenx",
+          ].includes(movieTitle.toLowerCase())
+        ) {
+          error.style.display = "block";
+          return;
+        }
+        if (
+          ![
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+          ].includes(dayOfWeek.toLowerCase())
+        ) {
+          error.style.display = "block";
+          return;
+          if (ticketAmount <= 0 || isNaN(ticketAmount)) {
+            error.style.display = "block";
+            return;
+          }
+        }
+        if (creditCardInfo.length !== 16 || isNaN(creditCardInfo)) {
+          error.style.display = "block";
+          return;
+        }
+        if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+          error.style.display = "block";
+          return;
+        } else {
+          success.style.display = "block";
+          return;
+        }
+      }
+    </script>
+  </body>
+</html>
